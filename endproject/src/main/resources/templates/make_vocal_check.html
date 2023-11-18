@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>음성 파일 확인</title>
+  <link href="../css/bootstrap.min.css"
+        th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link href="../css/make_vocal_check.css"
+        th:href="@{/css/make_vocal_check.css}" rel="stylesheet">
+</head>
+
+
+<body>
+<div>
+  <div th:insert="header.html  ::  header"></div>
+</div>
+<div class="hello">
+  <div class="container_s">
+    <div class="square-box">
+      모든 파일이 업로드 되었는지 확인해주세요.
+    </div>
+  </div>
+</div>
+<div class="hello">
+  <div class="rounded-box2">
+    <ul>
+      <li th:each="file : ${uploadedFiles}">
+        <a th:href="${file}" th:text="${file}"></a>
+      </li>
+    </ul>
+  </div>
+
+</div>
+<div class="mg">
+  <div class="hello">
+    <div class="button-container .start-button">
+      <a href="/workspace/vocal_ready" class="start-button">확인 완료</a>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>동적 캐릭터 생성</title>
+  <link href="../css/bootstrap.min.css"
+        th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link href="../css/make_char_media.css"
+        th:href="@{/css/make_char_media.css}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+</head>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<body>
+
+<div>
+  <div th:insert="header.html  ::  header"></div>
+</div>
+<div class="hello">
+  <div class="container_s">
+    <div class="rounded-box">
+      3단계
+    </div>
+    <div class="square-box">
+      동적 움직임 추가
+    </div>
+  </div>
+</div>
+
+<div class="hello">
+  <div class="rounded-box2">
+    <div class="hello2">
+    <div id="videoOutputZone"></div>
+    </div>
+  </div>
+</div>
+
+
+<div class="mg">
+  <div class="hello">
+    <div class="button-container .start-button2">
+      <button type="button" id="createImageButton" class='start-button2' onclick="createVideo()">영상 생성</button>
+    </div>
+  </div>
+  <input type="hidden" id="userPath" th:value="${@sessionController.UUID}" />
+</div>
+
+<div class="mg">
+  <div class="hello">
+    <div class="button-container .start-button">
+      <a href="/workspace/char_voice" class="start-button">이전 단계</a>
+    </div>
+    <div class="button-container .start-button">
+      <button class="start-button" id="next-button" onclick="nextPage()" disabled>완료 하기</button>
+<!--      <a href="/workspace/reposi" class="start-button">완료 하기</a>-->
+
+    </div>
+  </div>
+</div>
+
+
+
+</body>
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<script>
+  function nextPage() {
+    window.location.href = "/workspace/reposi";
+  }
+  function enableButton() {
+    const nextButton = document.getElementById("next-button");
+    nextButton.removeAttribute("disabled");
+  }
+
+  function disableButton() {
+    const nextButton = document.getElementById("next-button");
+    nextButton.setAttribute("disabled", "disabled");
+  }
+
+  disableButton();
+
+
+  var userPath = $("#userPath").val()
+  var initImage = "<img src=\'/apiResult/image/" + userPath + "/" + userPath + ".png\'/>"
+
+  $("#videoOutputZone").append(initImage);
+
+  function viewVideo(){
+    const player = new Plyr('#player');
+  }
+  function createVideo() {
+    var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="/image/loding.gif" />').appendTo(document.body).hide();
+
+    var formData = {
+      userPath: $("#userPath").val(),
+      imagePath: $("#userPath").val() + '.png',
+      audioPath :$("#userPath").val() + '.wav',
+    }
+
+    loading.show();
+    $.ajax({
+      type: "POST",
+      url: "/api/video",
+      data: formData
+    })
+            .done(function (result) {
+              console.log(result);
+              $("#videoOutputZone").replaceWith(result);
+              viewVideo()
+              loading.hide();
+              enableButton();
+            })
+            .fail(function(jqXHR) {
+              console.log(jqXHR);
+              loading.hide();
+            })
+  };
+
+</script>
+</html>

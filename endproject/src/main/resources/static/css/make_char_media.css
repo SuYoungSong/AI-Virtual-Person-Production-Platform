@@ -1,0 +1,201 @@
+body {
+    background: linear-gradient(90deg, #000000, #24004d); /* 배경 그라데이션 설정 */
+    color: white;
+    height: 100vh;
+}
+.hello{
+    margin: 0; /* body의 기본 마진을 제거합니다. */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hello2{
+    margin: 0; /* body의 기본 마진을 제거합니다. */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#videoOutputZone{
+    display: flex;
+    max-width: 100%;
+}
+
+#videoOutputZone img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+}
+
+#videoOutputZone video{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+}
+
+.container_s {
+    padding-top: 50px;
+    padding-bottom: 80px;
+    display: flex;
+    align-items: center;
+    color: black;
+}
+
+.rounded-box {
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+    width: 200px; /* 가로 크기를 2배로 늘립니다. */
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border: 5px solid #6062ED;
+    font-size: 36px; /* 글씨 크기를 조절합니다. */
+}
+
+.square-box {
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+    width: 600px; /* 가로 크기를 2배로 늘립니다. */
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: 5px solid #6062ED;
+    font-size: 36px; /* 글씨 크기를 조절합니다. */
+}
+
+.rounded-box2 {
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 20px;
+    width: 1000px;
+    height: auto;
+    border: 5px solid #6062ED;
+    color: black;
+    margin-right: 25px;
+    margin-left: 25px;
+}
+.rounded-box2 p {
+    font-size: 36px;
+}
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    /*align-items: center;*/
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.mg{
+    margin-top:50px;
+}
+
+/* 버튼 스타일 */
+.start-button {
+    /*background: linear-gradient(45deg, #007bff, #00ccff); !* 푸른색 계열 그라데이션 배경 *!*/
+    background: linear-gradient(45deg, #6062ED, #2E2F84); /* 그라데이션 효과를 적용한 배경색 */
+    /*background: #6062ED;*/
+    border: none;
+    border-radius: 20px; /* 버튼을 둥글게 만듭니다. */
+    color: #ffffff; /* 버튼 텍스트 색상을 흰색(#ffffff)으로 설정 */
+    padding: 15px 60px; /* 가로로 1.5배 더 긴 버튼을 만들기 위해 패딩 조절 */
+    font-size: 24px; /* 버튼에 맞게 글자 크기 조절 */
+    cursor: pointer;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    text-decoration: none; /* 기본 하이퍼링크 스타일 제거 */
+    margin-left: 15px;
+    margin-right: 15px;
+    /*margin-bottom: 100px;*/
+}
+.start-button:hover{
+    background: linear-gradient(45deg, #2E2F84, #6062ED); /* 그라데이션 효과를 적용한 배경색 */
+}
+
+.start-button2 {
+    background: linear-gradient(45deg, #007bff, #00ccff); /* 푸른색 계열 그라데이션 배경 */
+    /*border-image: linear-gradient(45deg, #007bff, #00ccff);*/
+    border-radius: 20px; /* 버튼을 둥글게 만듭니다. */
+    padding: 15px 60px; /* 가로로 1.5배 더 긴 버튼을 만들기 위해 패딩 조절 */
+    font-size: 24px; /* 버튼에 맞게 글자 크기 조절 */
+    cursor: pointer;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    text-decoration: none; /* 기본 하이퍼링크 스타일 제거 */
+    color: white;
+    margin-bottom: 50px;
+}
+
+.start-button2:hover{
+    background: linear-gradient(45deg, #00ccff,#007bff); /* 푸른색 계열 그라데이션 배경 */
+}
+
+.boxleft{
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.boxright{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.toggle-btn.on {
+    background-color: #2E2F84;
+}
+
+#loading {
+    height: 100%;
+    left: 0px;
+    position: fixed;
+    _position: absolute;
+    top: 0px;
+    width: 100%;
+    filter: alpha(opacity = 50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+}
+.loading {
+    background-color: white;
+    z-index: 999999;
+}
+#loading_img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 200px;
+    margin-top: -75px;
+    margin-left: -75px;
+    z-index: 999999;
+}
+
+#next-button[disabled] {
+    position: relative; /* 부모 요소로 설정 */
+    /* 비활성화된 버튼의 스타일 */
+    background-color: #ccc;
+    cursor: not-allowed;
+    color: #666; /* 텍스트 색상 변경 (선택 사항) */
+}
+
+
+#next-button[disabled]::after {
+    content: "영상을 생성한 후 진행할 수 있습니다."; /* 알림 텍스트 */
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    /*left: 105%;*/
+    background-color: #ffffff;
+    padding: 5px 10px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    color: #000000 ;
+    white-space: nowrap;
+    font-size: 16px;
+    z-index: 1; /* 다른 내용 위에 표시 */
+}
+
+#next-button[disabled]:hover::after {
+    display: block; /* 마우스를 올렸을 때 숨김 */
+}

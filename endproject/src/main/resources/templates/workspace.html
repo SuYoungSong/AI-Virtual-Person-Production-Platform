@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>작업을 선택하세요</title>
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="../css/workspace.css"
+          th:href="@{/css/workspace.css}" rel="stylesheet">
+</head>
+
+
+<body>
+
+    <div>
+        <div th:insert="header.html  ::  header"></div>
+    </div>
+
+
+    <div class="box_cont">
+        <div class="box" onclick="window.location.href='/workspace/char';">
+            <img src="/image/make_char.png" alt="캐릭터 이미지">
+            <div class="overlay"></div>
+            <p class="text">캐릭터 제작하기</p>
+        </div>
+        <div class="box" onclick="window.location.href='/workspace/vocal';">
+            <img src="/image/make_vocal.png" alt="음성 이미지">
+            <div class="overlay"></div>
+            <p class="text">음성 제작하기</p>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+  <link href="../css/bootstrap.min.css"
+        th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="../css/header_css.css"
+          th:href="@{/css/header_css.css}" rel="stylesheet">
+</head>
+<body>
+<div th:fragment="header">
+    <div class="px-3 py-2 text-bg-dark border-bottom">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                    <li>
+                        <a href="/" class="nav-link text-secondary text-white">
+                            <img src="/image/home.png" class="bi d-block mx-auto mb-1" width="24" height="24"/>
+                            Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/workspace" class="nav-link text-white">
+                            <img src="/image/customer-support.png" class="bi d-block mx-auto mb-1" width="24" height="24"/>
+                            작업장
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/workspace/reposi" class="nav-link text-white">
+                            <img src="/image/folder.png" class="bi d-block mx-auto mb-1" width="24" height="24"/>
+                            보관소
+                        </a>
+                    </li>
+                </ul>
+
+                <span class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none"> </span>
+                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                        <li th:if="${@sessionController.getMember() != null}">
+                          <div class="nav-link text-white" style="pointer-events: none">
+                                <img src="/image/user.png" class="bi d-block mx-auto mb-1" width="24" height="24"/>
+                                <span th:text="${@sessionController.member.nickname + '님'}"/>
+                          </div>
+                        </li>
+
+                        <li th:if="${@sessionController.getMember() != null}">
+                            <a href="/logout" class="nav-link text-white">
+                                <img src="/image/logout_image.png" class="bi d-block mx-auto mb-1" width="24" height="24"/>
+                                로그아웃
+                            </a>
+                        </li>
+                        <li th:if="${@sessionController.getMember() == null}">
+                            <a href="/registerPage" class="nav-link text-white">
+                                <img src="/image/register_image.png" class="bi d-block mx-auto mb-1" width="24" height="24"/>
+                                회원가입
+                            </a>
+                        </li>
+                        <li th:if="${@sessionController.getMember()  == null}">
+                            <a href="/loginPage" class="nav-link text-white">
+                                <img src="/image/login_image.png" class="bi d-block mx-auto mb-1" width="24" height="24"/>
+                                로그인
+                            </a>
+                        </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

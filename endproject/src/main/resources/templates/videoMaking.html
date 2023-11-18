@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link href="../css/bootstrap.min.css"
+        th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <title>작업소</title>
+</head>
+<style>
+  #loading {
+    height: 100%;
+    left: 0px;
+    position: fixed;
+    _position: absolute;
+    top: 0px;
+    width: 100%;
+    filter: alpha(opacity = 50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+  }
+  .loading {
+    background-color: white;
+    z-index: 999999;
+  }
+  #loading_img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 200px;
+    margin-top: -75px;
+    margin-left: -75px;
+    z-index: 999999;
+  }
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<body>
+<div>
+  <div th:insert="header.html  ::  header"></div>
+</div>
+<br>
+<br>
+<br>
+
+[ 비디오 정보 입력 ]<br>
+
+userPath:<input type="text" id="userPath"><br>
+imagePath:<input type="text" id="imagePath"><br>
+audioPath:<input type="text" id="audioPath"><br>
+
+<button type="button" id="createImageButton" onclick="createVideo()">영상 생성</button>
+
+<br><br><br>
+[ 비디오 출력 ]<br>
+<div id="videoOutputZone"></div>
+</body>
+
+<script>
+  function createVideo() {
+    var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="/image/loding.gif" />').appendTo(document.body).hide();
+
+    var formData = {
+      userPath: $("#userPath").val(),
+      imagePath:$("#imagePath").val(),
+      audioPath:$("#audioPath").val(),
+    }
+
+    loading.show();
+    $.ajax({
+      type: "POST",
+      url: "/api/video",
+      data: formData
+    })
+            .done(function (result) {
+              console.log(result);
+              $("#videoOutputZone").replaceWith(result);
+              loading.hide();
+            })
+            .fail(function(jqXHR) {
+              console.log(jqXHR);
+              loading.hide();
+            })
+  };
+</script>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link href="../css/bootstrap.min.css"
+        th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link href="../css/reposi_css.css"
+        th:href="@{/css/reposi_css.css}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <title>저장소</title>
+
+</head>
+<body>
+<div>
+  <div th:insert="header.html  ::  header"></div>
+</div>
+
+
+<div class="tab-container">
+  <button class="tab-button active" onclick="openTab('tab1')">영상</button>
+  <div class="tab-divider"></div>
+  <button class="tab-button" onclick="openTab('tab2')">음성</button>
+</div>
+
+<div id="tab1" class="tab-content active">
+  <div class="hello">
+    <div th:if="${char == null}">
+      <p>제작한 캐릭터가 없습니다.</p>
+    </div>
+
+    <div th:each="wc : ${char}">
+      <button class="modalShowButton" th:onclick="showModalVideo([[${wc.getUuid()}]])" >
+        <div class="card">
+            <img th:src="@{/apiResult/image/{uuid}/{uuid}.png(uuid=${wc.getUuid()})}" alt="이미지 1">
+            <p th:text="${wc.getChar_name()}">캐릭터명</p>
+        </div>
+      </button>
+
+      <!-- 모달 -->
+      <div th:id="${wc.getUuid()}" class="modal">
+        <div class="video-modal-content">
+          <span class="close" th:onclick="closeModal([[${wc.getUuid()}]])">&times;</span>
+          <div class="output_video_zone" th:id="${ 'output_video_zone_' + wc.getUuid() }">
+            <div class="videoOutputZone">
+              <video th:id="@{video_{uuid}(uuid=${wc.getUuid()})}" playsinline controls>
+                <source th:src="@{/apiResult/video/{uuid}/{uuid}{uuid}_enhanced.mp4(uuid=${wc.getUuid()})}"/>
+              </video>
+            </div>
+          </div>
+
+          <div class="char_info">
+            <div class="tab-container2">
+              <button class="tab-button2 active" th:onclick="openTab_video('videoInfoTab_',[[${wc.getUuid()}]],'newvideoMakeTab_',this)">정보</button>
+              <div class="tab-divider2"></div>
+              <button class="tab-button2" th:onclick="openTab_video('newvideoMakeTab_',[[${wc.getUuid()}]],'videoInfoTab_',this)">수정</button>
+            </div>
+
+            <div th:id="${'videoInfoTab_' + wc.getUuid()}" class="tab-content2 active">
+                <p class="char_info_header">○ 캐릭터 이름</p>
+                <p class="char_info_text" th:text="${wc.getChar_name()}"></p>
+                <hr>
+                <p class="char_info_header">○ 선택한 이미지 모델</p>
+                <p class="char_info_text"  th:text="${wc.getModel_info_text()}"></p>
+                <p class="char_info_header">○ 선택한 이미지 포즈</p>
+                <p class="char_info_text"  th:text="${wc.getPose_num_text()}"></p>
+                <p class="char_info_header">○ 선택한 이미지 Prompt</p>
+                <p class="char_info_text"  th:text="${wc.getImage_prompt()}"></p>
+                <hr>
+                <p class="char_info_header">○ 선택한 음성 모델</p>
+                <p class="char_info_text"  th:text="${wc.getAudio_model_text()}"></p>
+                <p class="char_info_header">○ 선택한 음성 Prompt</p>
+                <p class="char_info_text"  th:text="${wc.getVoice_prompt()}"></p>
+                <button class="downloadVideoButton" th:onclick="downloadVideo([[${wc.getUuid()}]],[[${wc.getChar_name()}]])">영상 다운로드</button>
+            </div>
+
+            <div th:id="${'newvideoMakeTab_' + wc.getUuid()}" class="tab-content2">
+              <p class="char_info_header">○ 음성 내용 변경하기 </p>
+              <div class="form-floating">
+                <textarea th:id="${'prompt_' + wc.getUuid() }" class="prompt_video form-control" placeholder="목소리로 표현할 문장을 작성해주세요." style="height: 200px"></textarea>
+                <label th:for="${'prompt_' + wc.getUuid() }">목소리로 표현할 문장을 작성해주세요.</label>
+              </div>
+              <div class="hello5">
+                <button type="button" id="createVideoButton" class="start-button2" th:onclick="createVideoReposi([[${wc.getUuid()}]], [[${wc.getAudio_model_info()}]])">영상 생성</button>
+              </div>
+              <div class="output_zone new_video_download_zone" th:id="${ 'output_zone_' + wc.getUuid() }">
+                <button class="downloadVideoButton" th:onclick="downloadVideo2([[${wc.getUuid()}]],[[${wc.getChar_name()}]])">영상 다운로드</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div id="tab2" class="tab-content">
+  <div class="hello">
+    <div th:if="${vocal == null}">
+      <p>제작한 음성이 없습니다.</p>
+    </div>
+
+    <div th:each="wv : ${vocal}">
+    <button class="modalShowButton" th:onclick="showModalAudio([[${wv.getUuid()}]])" th:attr="disabled=${wv.getReady() != '1'}">
+        <div class="card">
+          <img src="/image/vocal.png" alt="이미지 1">
+          <p class="card_text" th:text="${wv.getVocal_name()}">음성 이름</p>
+        </div>
+    </button>
+      <!-- 모달 -->
+      <div th:id="${wv.getUuid()}" class="modal">
+        <div class="audio-modal-content">
+          <span class="close" th:onclick="closeModal([[${wv.getUuid()}]])">&times;</span>
+          <div class="voice_info">
+            <p class="char_info_header">○ 음성 모델 이름</p>
+            <p class="char_info_text" th:text="${wv.getVocal_name()}"></p>
+            <hr>
+            <p class="char_info_header">○ 목소리 미리 듣기</p>
+            <audio th:id="${'ex_vocal_' + wv.getUuid() }" controls><source th:src="${ '/audio/' + wv.getUuid() + '.wav'}" type="audio/mpeg"></audio>
+            <hr>
+            <p class="char_info_header">○ 새로운 음성 만들기</p>
+            <div class="form-floating">
+              <textarea th:id="${'prompt_' + wv.getUuid() }" class="form-control prompt_audio" placeholder="목소리로 표현할 문장을 작성해주세요." style="height: 200px"></textarea>
+              <label th:for="${'prompt_' + wv.getUuid() }">예시: 안녕하세요 OO 목소리 입니다.</label>
+            </div>
+              <div class="hello5">
+                <button type="button" id="createVoiceButton" class="start-button2" th:onclick="createAudio([[${wv.getUuid()}]])">목소리 생성</button>
+              </div>
+            <div class="output_zone" th:id="${ 'output_zone_' + wv.getUuid() }">
+              <hr>
+              <p class="char_info_header" >○ 완성된 목소리</p>
+              <div class="audioOutputZone" >
+              </div>
+
+              <hr>
+
+              <button class="downloadAudioButton" th:onclick="downloadAudioRepoji([[${wv.getUuid()}]], [[${wv.getVocal_name()}]])">음성 다운로드</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<script>
+  function downloadVideo(uuid, filename) {
+    var videoElement = document.getElementById("video_" + uuid).querySelector("source");
+    var videoUrl = videoElement.src;
+
+    // 새로운 링크 엘리먼트를 생성하고 파일 URL을 설정합니다.
+    var downloadLink = document.createElement("a");
+    downloadLink.href = videoUrl;
+
+    // 비디오 파일 이름을 설정합니다.
+    var videoFileName = filename +".mp4";
+    downloadLink.download = videoFileName;
+    downloadLink.click();
+  }
+
+
+  function downloadVideo2(uuid, filename) {
+    var videoElement = document.getElementById("video_" + uuid + "_new").querySelector("source");
+    var videoUrl = videoElement.src;
+
+    // 새로운 링크 엘리먼트를 생성하고 파일 URL을 설정합니다.
+    var downloadLink = document.createElement("a");
+    downloadLink.href = videoUrl;
+
+    // 비디오 파일 이름을 설정합니다.
+    var videoFileName = filename +".mp4";
+    downloadLink.download = videoFileName;
+    downloadLink.click();
+  }
+
+  function downloadAudioRepoji(uuid,filename) {
+    var audioElement = document.getElementsByClassName("player_" + uuid)[0].querySelector("source")
+    var audioUrl = audioElement.src;
+
+    // 새로운 링크 엘리먼트를 생성하고 파일 URL을 설정합니다.
+    var downloadLink = document.createElement("a");
+    downloadLink.href = audioUrl;
+
+    var audioFileName = filename +".wav";
+    downloadLink.download = audioFileName;
+    downloadLink.click();
+  }
+  function showModalVideo(modalID){
+    const modal = document.getElementById(modalID);
+    modal.style.display = "block";
+    const videoPlayer = new Plyr("#"+ "video_" + modalID );
+  }
+
+  function showModalAudio(modalID){
+    const modal = document.getElementById(modalID);
+    const audio_ex_player = new Plyr("#" + 'ex_vocal_' + modalID )
+    modal.style.display = "block";
+
+  }
+  function closeModal(modalID){
+    // 모든 비디오 요소를 가져옵니다.
+    var videos = document.querySelectorAll('video');
+    var audios = document.querySelectorAll('audio');
+
+    // 각 비디오 요소를 반복하면서 정지시킵니다.
+    videos.forEach(function(video) {
+      video.pause();
+    });
+
+    audios.forEach(function(audio) {
+      audio.pause();
+    });
+
+    const modal = document.getElementById(modalID);
+    modal.style.display = "none";
+  }
+
+
+  // // 모달 외부 클릭 시 닫기
+  // window.onclick = function(event) {
+  //     if (event.target == document.getElementById("myModal")) {
+  //         document.getElementById("myModal").style.display = "none";
+  //     }
+  // }
+
+</script>
+<script>
+  // 페이지 로드 시 'loaded' 클래스를 body에 추가
+  document.addEventListener("DOMContentLoaded", function() {
+    document.body.classList.add("loaded");
+  });
+
+  function openTab_video(openTabId, uuid,closeTabId,button) {
+
+    // 모든 탭 버튼을 비활성화합니다.
+    var tabButtons = document.getElementsByClassName("tab-button2");
+    for (var i = 0; i < tabButtons.length; i++) {
+      tabButtons[i].classList.remove("active");
+    }
+
+    // 클릭한 탭에 해당하는 내용을 보여주고 해당 탭 버튼을 활성화합니다.
+    var openTabContent = document.getElementById(openTabId + uuid);
+    var closeTabContent = document.getElementById(closeTabId + uuid);
+
+
+    openTabContent.classList.add("active");
+    closeTabContent.classList.remove("active")
+
+    button.classList.add("active");
+  }
+
+
+
+  function openTab(tabId) {
+    // 모든 탭 내용을 숨깁니다.
+    var tabContents = document.getElementsByClassName("tab-content");
+    for (var i = 0; i < tabContents.length; i++) {
+      tabContents[i].classList.remove("active");
+    }
+
+    // 모든 탭 버튼을 비활성화합니다.
+    var tabButtons = document.getElementsByClassName("tab-button");
+    for (var i = 0; i < tabButtons.length; i++) {
+      tabButtons[i].classList.remove("active");
+    }
+
+    // 클릭한 탭에 해당하는 내용을 보여주고 해당 탭 버튼을 활성화합니다.
+    var tabContent = document.getElementById(tabId);
+    var tabButton = document.querySelector('[onclick="openTab(\'' + tabId + '\')"]');
+    tabContent.classList.add("active");
+    tabButton.classList.add("active");
+  }
+
+
+  function createAudio(uuid) {
+    var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="/image/loding.gif" />').appendTo(document.body).hide();
+
+    var formData = {
+      userPath: uuid,
+      text:$("#prompt_" + uuid).val(),
+      model_name: uuid,
+      model_name_text: uuid,
+    }
+
+    loading.show();
+    $.ajax({
+      type: "POST",
+      url: "/api/audio_vc_reposi",
+      data: formData
+    })
+            .done(function (result) {
+              console.log(result);
+              document.getElementById('output_zone_' + uuid).getElementsByClassName("audioOutputZone")[0].innerHTML = result
+              var player = new Plyr('#video_' + uuid + "_new")
+              var outputZone = document.getElementById('output_zone_' + uuid);
+              outputZone.style.display = 'block';
+              loading.hide();
+            })
+            .fail(function(jqXHR) {
+              console.log(jqXHR);
+              loading.hide();
+            })
+  };
+
+
+  function createVideoReposi(uuid, voiceModel) {
+    var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="/image/loding.gif" />').appendTo(document.body).hide();
+
+    var formData = {
+      userPath: uuid,
+      text:$("#prompt_" + uuid).val(),
+      voice_model: voiceModel,
+    }
+
+    loading.show();
+    $.ajax({
+      type: "POST",
+      url: "/api/create_video_reposi",
+      data: formData
+    })
+            .done(function (result) {
+              console.log(result);
+              document.getElementById('output_video_zone_' + uuid).getElementsByClassName("videoOutputZone")[0].innerHTML = result
+              var video_player = new Plyr('#video_' + uuid + '_new')
+              var outputZone = document.getElementById('output_zone_' + uuid);
+              outputZone.style.display = 'block';
+              loading.hide();
+            })
+            .fail(function(jqXHR) {
+              console.log(jqXHR);
+              loading.hide();
+            })
+  };
+</script>
+</body>
+</html>

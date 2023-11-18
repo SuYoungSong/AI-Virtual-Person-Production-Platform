@@ -1,0 +1,78 @@
+
+/*html body {*/
+/*    background-image: url('../image/main_background.jpg'); !* /static/ 경로 추가 *!*/
+/*    background-size: 100% 200%; !* 배경 이미지를 화면에 맞춰서 표시 *!*/
+/*    !*background-repeat: no-repeat; !* 배경 이미지를 반복하지 않도록 설정 *!*!*/
+/*    color: #ffffff; !* 글자색을 흰색(#ffffff)으로 설정 *!*/
+/*}*/
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(90deg, #000000, #24004d); /* 검정색에서 더 어두운 보라색으로 그라데이션 처리 */
+    color: white;
+}
+/* 텍스트 스타일 */
+.main-text {
+    font-size: 48px;
+    text-align: center;
+    margin-top: 200px; /* 텍스트와 버튼 사이 간격 조정 */
+    margin-bottom: 100px; /* 텍스트와 버튼 사이 간격 조정 */
+}
+.content {
+    /*background-color: rgba(0, 0, 0, 0.3); !* 어두운 파란색 배경에 50% 불투명도 적용 (0.5는 불투명도 값을 나타냄) *!*/
+    /*background-size: cover;*/
+    /*padding-bottom:  50%; !* 가로로 1.5배 더 긴 버튼을 만들기 위해 패딩 조절 *!*/
+
+}
+/* 버튼 컨테이너 스타일 */
+.button-container {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* 버튼 스타일 */
+.start-button {
+    /*background: linear-gradient(45deg, #007bff, #00ccff); !* 푸른색 계열 그라데이션 배경 *!*/
+    background: linear-gradient(45deg, #6062ED, #2E2F84); /* 그라데이션 효과를 적용한 배경색 */
+    /*background: #6062ED;*/
+    border: none;
+    border-radius: 20px; /* 버튼을 둥글게 만듭니다. */
+    color: #ffffff; /* 버튼 텍스트 색상을 흰색(#ffffff)으로 설정 */
+    padding: 15px 60px; /* 가로로 1.5배 더 긴 버튼을 만들기 위해 패딩 조절 */
+    font-size: 24px; /* 버튼에 맞게 글자 크기 조절 */
+    cursor: pointer;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    text-decoration: none; /* 기본 하이퍼링크 스타일 제거 */
+
+}
+
+/* 버튼 호버 효과 */
+.start-button:hover {
+    /*background: linear-gradient(45deg, #00ccff, #007bff); !* 푸른색 계열 그라데이션 배경 *!*/
+    background: linear-gradient(45deg, #2E2F84, #6062ED); /* 호버 상태일 때 그라데이션 효과를 적용한 배경색 */
+
+}
+
+/* 초기 설정: 텍스트와 버튼을 위로 숨깁니다 */
+.main-text, .start-button {
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* 애니메이션 키프레임 정의 */
+@keyframes slideIn {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 텍스트와 버튼에 애니메이션 적용 */
+.main-text, .start-button {
+    animation: slideIn 0.3s ease-in-out 0.3s forwards;
+}

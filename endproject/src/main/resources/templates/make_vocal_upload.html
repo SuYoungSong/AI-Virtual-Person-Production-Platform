@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>음성 파일 업로드</title>
+  <link href="../css/bootstrap.min.css"
+        th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link href="../css/make_vocal_upload.css"
+        th:href="@{/css/make_vocal_upload.css}" rel="stylesheet">
+  <!-- 클라이언트 소스 로드 -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+</head>
+
+
+<body>
+<div>
+  <div th:insert="header.html  ::  header"></div>
+</div>
+<div class="hello">
+  <div class="container_s">
+    <div class="square-box">
+      음성파일을 업로드 해주세요
+    </div>
+  </div>
+</div>
+
+<div class="hello">
+  <div class="rounded-box2">
+
+    <div class="form-floating">
+      <input type="text" id="vocalName" class="form-control" placeholder="음성의 별칭을 입력해주세요.">
+      <label for="vocalName">음성의 별칭을 입력해주세요.</label>
+    </div>
+
+    <form action="/vocal_upload" class="dropzone" id="fileDropzone">
+      <div class="fallback">
+        <input name="file" type="file" multiple>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<div class="mg">
+  <div class="hello">
+    <div class="button-container">
+      <div class="start-button">음성 업로드</div>
+    </div>
+  </div>
+</div>
+
+<input type="hidden" id="userPath" th:value="${@sessionController.UUID}" />
+
+</body>
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+<script>
+  var UUID = $("#userPath").val()
+  Dropzone.autoDiscover = false;
+  var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="/image/loding.gif" />').appendTo(document.body).hide();
+
+  $(document).ready(function () {
+    const myDropzone = new Dropzone("#fileDropzone", {
+      url: "/vocal_upload",
+      paramName: "file",
+      maxFilesize: 100,
+      addRemoveLinks: true,
+      dictDefaultMessage: "음성 파일을 드래그 앤 드롭 또는 클릭하여 업로드하세요",
+      autoProcessQueue: false, // 파일 자동 업로드 비활성화
+
+      // clickable: true, // 클릭 가능 여부
+      // autoQueue: false, // 드래그 드랍 후 바로 서버로 전송
+      // createImageThumbnails: true, //파일 업로드 썸네일 생성
+      // addRemoveLinks:true,
+      // thumbnailHeight: 120, // Upload icon size
+      // thumbnailWidth: 120, // Upload icon size
+
+      // maxFiles: 1000, // 업로드 파일수
+      // maxFilesize: 100000, // 최대업로드용량 : 100MB
+      // paramName: "file", // 서버에서 사용할 formdata 이름 설정 (default는 file)
+      parallelUploads: 1000, // 동시파일업로드 수(이걸 지정한 수 만큼 여러파일을 한번에 넘긴다.)
+      // uploadMultiple: true, // 다중업로드 기능
+      // timeout: 3000000000, //커넥션 타임아웃 설정 -> 데이터가 클 경우 꼭 넉넉히 설정해주자
+
+      // addRemoveLinks: true, // 업로드 후 파일 삭제버튼 표시 여부
+      dictRemoveFile: '삭제', // 삭제버튼 표시 텍스트
+      acceptedFiles: '.wav',
+      dictMaxFilesExceeded: "최대 {{maxFiles}}개 파일만 업로드할 수 있습니다.", // 파일 갯수 초과시 메시지
+
+      params: {
+        'userPath': UUID,
+        // 'vocalName' : $("#vocalName").val(),
+      },
+    });
+
+    // 수동으로 업로드 버튼을 누를 때 업로드 작업 시작
+    document.querySelector(".start-button").addEventListener("click", function (e) {
+      loading.show();
+      e.preventDefault();
+      e.stopPropagation();
+
+      myDropzone.processQueue(); // 파일 업로드 시작
+
+    });
+
+    myDropzone.on("sending", function(file, xhr, formData) {
+      formData.append("vocalName", $("#vocalName").val());
+    });
+
+    myDropzone.on("success", function (file, response) {
+      // 파일 업로드 성공 시 처리
+      console.log("업로드 성공:", response);
+      loading.hide();
+      window.location.href = "/workspace/vocal_ready";
+    });
+
+    myDropzone.on("error", function (file, errorMessage) {
+      // 파일 업로드 실패 시 처리
+      console.log("업로드 실패:", errorMessage);
+    });
+  });
+</script>
+
+</html>

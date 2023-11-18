@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link href="../css/bootstrap.min.css"
+        th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <title>작업소</title>
+</head>
+<style>
+  #loading {
+    height: 100%;
+    left: 0px;
+    position: fixed;
+    _position: absolute;
+    top: 0px;
+    width: 100%;
+    filter: alpha(opacity = 50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+  }
+  .loading {
+    background-color: white;
+    z-index: 999999;
+  }
+  #loading_img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 200px;
+    margin-top: -75px;
+    margin-left: -75px;
+    z-index: 999999;
+  }
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<body>
+<div>
+  <div th:insert="header.html  ::  header"></div>
+</div>
+<br>
+<br>
+<br>
+
+[ 목소리 정보 입력 ]<br>
+
+userPath:<input type="text" id="userPath"><br>
+modelName:
+<label><input type="radio" name="check_model_name" value="chungcheong">충청도 사투리</label>
+<label><input type="radio" name="check_model_name" value="gangwon">강원도 사투리</label>
+<label><input type="radio" name="check_model_name" value="gyeongsang">경상도 사투리</label>
+<label><input type="radio" name="check_model_name" value="jeju">제주도 사투리</label>
+<label><input type="radio" name="check_model_name" value="jeolla">전라도 사투리</label><br>　　　　　　
+<label><input type="radio" name="check_model_name" class="kss" value="G_665000">kss 66만</label>
+<label><input type="radio" name="check_model_name" class="kss" value="G_600000">kss 60만</label>
+<label><input type="radio" name="check_model_name" class="kss" value="G_500000">kss 50만</label>
+<label><input type="radio" name="check_model_name" class="kss" value="G_400000">kss 40만</label>
+<label><input type="radio" name="check_model_name" class="kss" value="G_300000">kss 30만</label>
+<label><input type="radio" name="check_model_name" class="kss" value="G_200000">kss 20만</label>
+<label><input type="radio" name="check_model_name" class="kss" value="G_100000">kss 10만</label><br>
+
+text: <input type="text" id="prompt"/><br>
+
+<button type="button" id="createImageButton" onclick="createAudio()">목소리 생성</button>
+
+<br><br><br>
+[ 목소리 출력 ]<br>
+<div id="audioOutputZone"></div>
+</body>
+
+<script>
+  function createAudio() {
+    var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="/image/loding.gif" />').appendTo(document.body).hide();
+
+    var url_path;
+    if ( $("[name=check_model_name]:checked").attr("class") == "kss"){
+      url_path = "/api/audio_vits"
+    }else { url_path = "/api/audio" }
+    var formData = {
+      userPath: $("#userPath").val(),
+      text:$("#prompt").val(),
+      model_name:$("[name=check_model_name]:checked").val(),
+    }
+
+    loading.show();
+    $.ajax({
+      type: "POST",
+      url: url_path,
+      data: formData
+    })
+            .done(function (result) {
+              console.log(result);
+              $("#audioOutputZone").replaceWith(result);
+              loading.hide();
+            })
+            .fail(function(jqXHR) {
+              console.log(jqXHR);
+              loading.hide();
+            })
+  };
+</script>
+</html>

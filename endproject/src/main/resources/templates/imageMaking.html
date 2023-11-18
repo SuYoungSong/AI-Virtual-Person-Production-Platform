@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link href="../css/bootstrap.min.css"
+        th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <title>작업소</title>
+</head>
+<style>
+  #loading {
+    height: 100%;
+    left: 0px;
+    position: fixed;
+    _position: absolute;
+    top: 0px;
+    width: 100%;
+    filter: alpha(opacity = 50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+  }
+  .loading {
+    background-color: white;
+    z-index: 999999;
+  }
+  #loading_img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 200px;
+    margin-top: -75px;
+    margin-left: -75px;
+    z-index: 999999;
+  }
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<body>
+<div>
+  <div th:insert="header.html  ::  header"></div>
+</div>
+<br>
+<br>
+<br>
+[ 이미지 정보 입력 ]<br>
+
+고유번호:<input type="text" id="userPath"><br>
+모델 선택:
+<label><input type="radio" name="check_model_name" value="majicMIX-realistic-v5">majicMIX-realistic-v5</label>
+<label><input type="radio" name="check_model_name" value="stable-diffusion-2-1-base">stable-diffusion-2-1-base</label>
+<label><input type="radio" name="check_model_name" value="stable-diffusion-v1-5">stable-diffusion-v1-5</label><br>
+포즈 선택:
+<label><input type="radio" name="check_pose_image" value="pose.png">1</label>
+<label><input type="radio" name="check_pose_image" value="pose2.png">2</label>
+<label><input type="radio" name="check_pose_image" value="pose3.png">3</label>
+<label><input type="radio" name="check_pose_image" value="pose4.png">4</label><br>
+
+이미지에 표현할 요소: <input type="text" id="prompt"/><br>
+이미지에서 제외할 요소:<input type="text" id="negativePrompt"/><br>
+
+<button type="button" id="createImageButton" onclick="createImage()">이미지 생성</button>
+
+<br><br><br>
+[ 이미지 출력 ]<br>
+<div id="imageOutputZone"></div>
+</body>
+
+<script>
+  function createImage() {
+    var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="/image/loding.gif" />').appendTo(document.body).hide();
+
+    var modelVersion;
+    if ( $("[name=check_model_name]:checked").val() == "stable-diffusion-2-1-base"){
+      modelVersion = "2.1"
+    }else { modelVersion = "1.5" }
+    var formData = {
+      modelVersion: modelVersion,
+      userPath: $("#userPath").val(),
+      prompt:$("#prompt").val(),
+      negativePrompt:$("#negativePrompt").val(),
+      modelName:$("[name=check_model_name]:checked").val(),
+      poseImagePath:$("[name=check_pose_image]:checked").val()
+    }
+
+
+    loading.show();
+    $.ajax({
+      type: "POST",
+      url: "/api/image",
+      data: formData
+    })
+            .done(function (result) {
+              console.log(result);
+              $("#imageOutputZone").replaceWith(result);
+              loading.hide();
+            })
+            .fail(function(jqXHR) {
+              console.log(jqXHR);
+              loading.hide();
+            })
+  };
+</script>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>캐릭터 이미지 생성</title>
+  <link href="../css/bootstrap.min.css"
+        th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link href="../css/make_char_image.css"
+        th:href="@{/css/make_char_image.css}" rel="stylesheet">
+</head>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<body>
+
+<div>
+  <div th:insert="header.html  ::  header"></div>
+</div>
+<div class="hello">
+<div class="container_s">
+  <div class="rounded-box">
+    1단계
+  </div>
+  <div class="square-box">
+    캐릭터 이미지 생성하기
+  </div>
+</div>
+</div>
+<div class="hello">
+<div class="rounded-box2">
+
+  <div class="toggle-container">
+    <button class="toggle-btn on boxleft" onclick="toggleContent('create')">만들기</button>
+    <button class="toggle-btn boxright" onclick="toggleContent('upload')">업로드</button>
+  </div>
+  <div id="upload-content" style="display: none;">
+  <!-- 업로드 내용 -->
+    <p>○ 캐릭터 이름 입력</p>
+    <div class="form-floating">
+      <input type="text" id="charName2" class="form-control" placeholder="캐릭터 이름을 입력하세요.">
+      <label for="charName2">캐릭터 이름</label>
+    </div>
+<!--    <p>○ 캐릭터 이름</p>-->
+<!--    <input type="text" id="charName2">-->
+    <p>○ 캐릭터 이미지 업로드</p>
+    <div class="input-group mb-3" form-floating>
+      <input type="file" class="form-control" id="imageFile" name="file" accept="image/png">
+    </div><br>
+
+    <div class="hello">
+      <div class="button-container .start-button2">
+        <button type="button" class="start-button2" id="uploadImageButton" onclick="uploadImage()">이미지 업로드</button>
+      </div>
+    </div>
+  </div>
+  <div id="create-content" >
+    <!-- 만들기 내용 -->
+    <p>○ 캐릭터 이름 입력</p>
+    <div class="form-floating">
+      <input type="text" id="charName" class="form-control" placeholder="캐릭터 이름을 입력하세요.">
+      <label for="charName">캐릭터 이름</label>
+    </div>
+<!--    <p>○ 캐릭터 이름</p>-->
+<!--    <input type="text" id="charName">-->
+
+    <p>○ 이미지 모델 선택</p>
+<!--    <label><input type="radio" name="check_model_name" value="stable-diffusion-v1-5">stable-diffusion-v1-5</label>-->
+<!--    <label><input type="radio" name="check_model_name" value="stable-diffusion-2-1-base">stable-diffusion-2-1-base</label>-->
+    <input type="radio" class="btn-check" name="check_model_name" value="majicmixRealistic_v7" id = "majicmixRealistic_v7" autocomplete="off" checked/>
+    <label class="btn btn-outline-secondary" for="majicmixRealistic_v7">인물</label>
+
+    <input type="radio" class="btn-check" name="check_model_name" value="CounterfeitV30_v30" id="CounterfeitV30_v30" autocomplete="off"/>
+    <label class="btn btn-outline-secondary" for="CounterfeitV30_v30">캐릭터</label>
+
+    <input type="radio" class="btn-check" name="check_model_name" value="beautifulRealistic_v7" id="beautifulRealistic_v7" autocomplete="off"/>
+    <label class="btn btn-outline-secondary" for="beautifulRealistic_v7">동양인 인물</label>
+
+<!--    <input type="radio" class="btn-check" name="check_model_name" value="majicmixRealistic_betterV2V25" id="majicmixRealistic_betterV2V25" autocomplete="off"/>-->
+<!--    <label class="btn btn-outline-secondary" for="majicmixRealistic_betterV2V25">majicmixRealistic_betterV2V25</label>-->
+
+    <p>○ 포즈 선택</p>
+    <input type="radio" class="btn-check" name="check_pose_image" value="pose.png" id="pose.png" autocomplete="off" checked/>
+    <label class="show-image btn btn-outline-secondary" for="pose.png" >얼굴</label>
+    <img src="/image/pose.jpg" alt="Pose 1" class="pose-image" id="pose1">
+
+    <input type="radio" class="btn-check" name="check_pose_image" value="pose2.png" id="pose2.png" autocomplete="off"/>
+    <label class="show-image btn btn-outline-secondary" for="pose2.png" >상반신1</label>
+    <img src="/image/pose2.jpeg" alt="Pose 2" class="pose-image" id="pose2">
+
+    <input type="radio" class="btn-check" name="check_pose_image" value="pose3.png" id="pose3.png" autocomplete="off"/>
+    <label class="show-image btn btn-outline-secondary" for="pose3.png">상반신2</label>
+    <img src="/image/pose3.jpeg" alt="Pose 3" class="pose-image" id="pose3">
+
+    <input type="radio" class="btn-check"  name="check_pose_image" value="pose4.png" id="pose4.png" autocomplete="off"/>
+    <label class="show-image btn btn-outline-secondary" for="pose4.png" >상반신3</label>
+    <img src="/image/pose4.jpeg" alt="Pose 4" class="pose-image" id="pose4">
+
+    <br><p>○ 이미지 설명</p>
+    <div class="form-floating">
+      <textarea class="form-control" placeholder="예시: 우산을 쓰고 있는 20대 초반의 남학생" id="prompt" ></textarea>
+      <label for="prompt">예시: 우산을 쓰고 있는 20대 초반의 남학생</label>
+    </div>
+
+<!--    <p>이미지에서 제외할 요소</p>-->
+    <input type="hidden" id="negativePrompt"/><br>
+   <div class="hello">
+      <div class="button-container .start-button2">
+        <button type="button" class="start-button2" id="createImageButton" onclick="createImage()">이미지 생성</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="rounded-box3">
+    <div id="imageOutputZone"></div>
+  </div>
+
+</div>
+<div class="mg">
+<div class="hello">
+  <div class="button-container .start-button">
+    <button class="start-button" id="next-button" onclick="nextPage()" disabled>다음 단계</button>
+<!--    <a href="/workspace/char_voice" class="start-button" id="next-button" disabled>다음 단계</a>-->
+  </div>
+</div>
+</div>
+
+<input type="hidden" id="userPath" th:value="${@sessionController.UUID}" />
+
+
+</body>
+
+<script>
+  function nextPage() {
+    window.location.href = "/workspace/char_voice";
+  }
+  function enableButton() {
+    const nextButton = document.getElementById("next-button");
+    nextButton.removeAttribute("disabled");
+  }
+
+  function disableButton() {
+    const nextButton = document.getElementById("next-button");
+    nextButton.setAttribute("disabled", "disabled");
+  }
+
+  disableButton();
+
+  var UUID = $("#userPath").val()
+  function toggleContent(mode) {
+    if (mode === 'upload') {
+      document.getElementById('upload-content').style.display = 'block';
+      document.getElementById('charName').value = ''
+      document.getElementById('create-content').style.display = 'none';
+      document.querySelector('.toggle-btn.on').classList.remove('on');
+      document.querySelector('.toggle-btn:nth-child(2)').classList.add('on');
+    } else if (mode === 'create') {
+      document.getElementById('upload-content').style.display = 'none';
+      document.getElementById('create-content').style.display = 'block';
+      document.getElementById('charName2').value = ''
+      document.querySelector('.toggle-btn.on').classList.remove('on');
+      document.querySelector('.toggle-btn:nth-child(1)').classList.add('on');
+    }
+  }
+
+  function createImage() {
+    var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="/image/loding.gif" />').appendTo(document.body).hide();
+
+    var modelVersion;
+    if ( $("[name=check_model_name]:checked").val() == "stable-diffusion-2-1-base"){
+      modelVersion = "2.1"
+    }else { modelVersion = "1.5" }
+
+    var formData = {
+      charName: $("#charName").val(),
+      modelVersion: modelVersion,
+      prompt:$("#prompt").val(),
+      negativePrompt:$("#negativePrompt").val(),
+      modelName:$("[name=check_model_name]:checked").val(),
+      modelNameText:$("[name=check_model_name]:checked").next('label').text(),
+      poseImagePath:$("[name=check_pose_image]:checked").val(),
+      poseImagePathText:$("[name=check_pose_image]:checked").next('label').text(),
+
+      userPath: UUID
+    }
+
+
+    loading.show();
+    $.ajax({
+      type: "POST",
+      url: "/api/image",
+      data: formData
+    })
+            .done(function (result) {
+              console.log(result);
+              $("#imageOutputZone").replaceWith(result);
+              loading.hide();
+              enableButton();
+            })
+            .fail(function(jqXHR) {
+              console.log(jqXHR);
+              loading.hide();
+            })
+  };
+
+  function uploadImage() {
+    var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="/image/loding.gif" />').appendTo(document.body).hide();
+
+    var formData = new FormData();
+    formData.append("file", document.getElementById("imageFile").files[0]);
+    formData.append("charName", $("#charName2").val());
+    formData.append("userPath", UUID);
+    // formData.append("modelName", $("[name=check_model_name]:checked").text(),);
+    // formData.append("poseNum", $("[name=check_pose_image]:checked").text());
+
+
+    loading.show();
+    $.ajax({
+      type: "POST",
+      enctype: 'multipart/form-data',
+      url: "/image_upload",
+      data: formData,
+      contentType: false,
+      processData: false,
+    })
+            .done(function (result) {
+              console.log(result);
+              $("#imageOutputZone").replaceWith(result);
+              loading.hide();
+              enableButton();
+            })
+            .fail(function(jqXHR) {
+              console.log(jqXHR);
+              loading.hide();
+            })
+  };
+</script>
+
+</html>

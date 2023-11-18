@@ -1,0 +1,6 @@
+< 구동 방법 >
+ - kt_tts.py	: 지니랩스 키 입력하기 ( RVC 추론 base로 사용 )
+ - 모든 파일 절대경로 변경 필요
+ - 각 라이브러리, 모델 Github, HuggingFace, civitai 에서 다운로드 필요 ( 폴더 속 링크 )
+ 
+ - pose_to_image > llmodel.py		kakao kogpt key, bard key, gpt key  키 입력하기.

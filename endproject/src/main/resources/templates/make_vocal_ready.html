@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>학습 준비 완료</title>
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="../css/make_vocal_ready.css"
+          th:href="@{/css/make_vocal_ready.css}" rel="stylesheet">
+</head>
+
+
+<body>
+<div>
+    <div th:insert="header.html  ::  header"></div>
+</div>
+
+<div class="hello">
+    <div class="rounded-box2">
+        <p>음성 제작을 위해서는 학습 과정이 필요합니다.</p>
+        <p>학습이 완료될때 까지 기달려주세요</p><br>
+        <p>예상대기시간: 12시간</p>
+
+    </div>
+
+</div>
+<div class="mg">
+    <div class="hello">
+        <div class="button-container .start-button">
+            <a href="/" class="start-button">완료 하기</a>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

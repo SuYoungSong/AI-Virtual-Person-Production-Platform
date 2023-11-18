@@ -1,0 +1,6 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(90deg, #000000, #24004d); /* 검정색에서 더 어두운 보라색으로 그라데이션 처리 */
+    color: white;
+}

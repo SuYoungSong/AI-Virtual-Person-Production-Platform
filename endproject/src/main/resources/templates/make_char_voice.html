@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>캐릭터 목소리 생성</title>
+  <link href="../css/bootstrap.min.css"
+        th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link href="../css/make_char_voice.css"
+        th:href="@{/css/make_char_voice.css}" rel="stylesheet">
+  <link href="../css/green-audio-player.css"
+        th:href="@{/css/green-audio-player.css}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+</head>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<body>
+
+<div>
+  <div th:insert="header.html  ::  header"></div>
+</div>
+<div class="hello">
+  <div class="container_s">
+    <div class="rounded-box">
+      2단계
+    </div>
+    <div class="square-box">
+      캐릭터 목소리 생성하기
+    </div>
+  </div>
+</div>
+<div class="hello">
+  <div class="rounded-box2">
+    <h2>음성을 선택하세요</h2>
+    <p>○ 기본 음성 모델 선택</p>
+    <div class="voice_model_zone">
+      <input type="radio" class="btn-check" name="check_model_name" value="chungcheong" id="chungcheong" autocomplete="off" checked/>
+      <label class="btn btn-outline-secondary" for="chungcheong">충청도 사투리</label>
+
+      <input type="radio" class="btn-check" name="check_model_name" value="gangwon" id="gangwon" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="gangwon">강원도 사투리</label>
+
+      <input type="radio" class="btn-check" name="check_model_name" value="gyeongsang" id="gyeongsang" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="gyeongsang">경상도 사투리</label>
+
+      <input type="radio" class="btn-check" name="check_model_name" value="jeju" id="jeju" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="jeju">제주도 사투리</label>
+
+      <input type="radio" class="btn-check" name="check_model_name" value="jeolla" id="jeolla"/>
+      <label class="btn btn-outline-secondary" for="jeolla">전라도 사투리</label>
+
+      <input type="radio" class="btn-check kss" name="check_model_name" value="kss" id="kss" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="kss">KSS</label>
+
+      <input type="radio" class="btn-check" name="check_model_name" value="anna-asti" id="anna-asti" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="anna-asti">anna-asti</label>
+
+      <input type="radio" class="btn-check" name="check_model_name" value="billieeilishlive" id="billieeilishlive" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="billieeilishlive">Billie-eilish</label>
+
+  <!--    <input type="radio" class="btn-check" name="check_model_name" value="guanguanV1" id="guanguanV1" autocomplete="off"/>-->
+  <!--    <label class="btn btn-outline-secondary" for="guanguanV1">guanguan</label>-->
+
+      <input type="radio" class="btn-check" name="check_model_name" value="GUN NAPAT" id="GUN NAPAT" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="GUN NAPAT">GUN-NAPAT</label>
+
+      <input type="radio" class="btn-check" name="check_model_name" value="jhopeRVCv2" id="jhopeRVCv2" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="jhopeRVCv2">J-HOPE</label>
+
+  <!--    <input type="radio" class="btn-check" name="check_model_name" value="keruanV1" id="keruanV1" autocomplete="off"/>-->
+  <!--    <label class="btn btn-outline-secondary" for="keruanV1">keruanV1</label>-->
+
+  <!--    <input type="radio" class="btn-check" name="check_model_name" value="kikiV1" id="kikiV1" autocomplete="off"/>-->
+  <!--    <label class="btn btn-outline-secondary" for="kikiV1">kikiV1</label>-->
+
+      <input type="radio" class="btn-check" name="check_model_name" value="Leonid" id="Leonid" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="Leonid">Leonid</label>
+
+      <input type="radio" class="btn-check" name="check_model_name" value="MaiDavika350" id="MaiDavika350" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="MaiDavika350">MaiDavika</label>
+
+      <input type="radio" class="btn-check" name="check_model_name" value="Pedro_Pierluisi" id="Pedro_Pierluisi" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="Pedro_Pierluisi">Pedro_Pierluisi</label>
+
+      <input type="radio" class="btn-check" name="check_model_name" value="SeoJiwon_300eps" id="SeoJiwon_300eps" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="SeoJiwon_300eps">SeoJiwon</label>
+
+      <input type="radio" class="btn-check" name="check_model_name" value="talkingtom2012" id="talkingtom2012" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="talkingtom2012">Talkingtom</label>
+
+      <input type="radio" class="btn-check" name="check_model_name" value="timcook" id="timcook" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="timcook">Timcook</label>
+
+      <input type="radio" class="btn-check" name="check_model_name" value="trump" id="trump" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="trump">Trump</label>
+
+  <!--    <input type="radio" class="btn-check" name="check_model_name" value="YoonSukYeol" id="YoonSukYeol" autocomplete="off"/>-->
+  <!--    <label class="btn btn-outline-secondary" for="YoonSukYeol">YoonSukYeol</label>-->
+
+      <input type="radio" class="btn-check" name="check_model_name" value="IU" id="IU" autocomplete="off"/>
+      <label class="btn btn-outline-secondary" for="IU">IU</label>
+    </div>
+    <p th:if="${vocal != null}" ><br>○ 사용자 음성 모델 선택</p>
+    <div class="voice_model_zone">
+      <div th:each="wv : ${vocal}">
+        <input type="radio" class="btn-check" name="check_model_name" th:value="${wv.getUuid()}" th:id="${wv.getUuid()}" autocomplete="off" th:attr="disabled=${wv.getReady() != '1'}"/>
+        <label class="btn btn-outline-secondary" th:for="${wv.getUuid()}" th:text="${wv.getVocal_name()}"></label>
+      </div>
+    </div>
+
+    <br><br><p>○ 선택한 목소리 미리듣기</p>
+    <audio id="ex_vocal" controls><source src="/audio/chungcheong.wav" type="audio/mpeg"></audio>
+
+  </div>
+  <div class="rounded-box2">
+    <h2>목소리를 설정하세요.</h2>
+    <div class="toggle-container">
+      <button class="toggle-btn on boxleft" onclick="toggleContent('create')">만들기</button>
+      <button class="toggle-btn boxright" onclick="toggleContent('upload')">업로드</button>
+    </div>
+
+    <div id="upload-content" style="display: none;">
+      <p>○ 캐릭터 목소리 업로드</p>
+      <div class="input-group mb-3" form-floating>
+        <input type="file" class="form-control" id="audioFile" name="file" accept="audio/wav, audio/x-wav">>
+      </div><br>
+      <label for="customRange2" class="form-label">음조 설정</label>
+      <input type="range" class="form-range" min="-12" value = "0" max="12"  step="1" id="customRange2"><br>
+      <p>※ 음성모델을 선택 후 목소리를 업로드하는 경우 파일의 목소리를 음성 모델의 목소리로 변환합니다.</p><br>
+      <p>※ 음성파일을 업로드 하는 경우 일부 음성 모델을 선택할 수 없습니다.</p>
+      <div class="hello">
+        <div class="button-container .start-button2">
+          <button type="button" class="start-button2" id="uploadAudioButton" onclick="uploadAudio()">목소리 생성</button>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div id="create-content" >
+      <div class="form-floating">
+        <textarea id="prompt" class="form-control" placeholder="목소리로 표현할 문장을 작성해주세요."></textarea>
+        <label for="prompt">예시: 안녕하세요 OO 목소리 입니다.</label>
+      </div>
+
+      <div class="hello">
+      <button type="button" id="createImageButton" class="start-button2" onclick="createAudio()">목소리 생성</button>
+      </div>
+    </div>
+  </div>
+  <div class="rounded-box2" style="overflow-y: hidden;">
+    <h2>생성된 목소리</h2>
+    <div class="hello2">
+      <div class="audioOutputZone">
+        <div class="ready-player-1">
+          <audio id="nomedia" controls><source src="" type="audio/mpeg"></audio>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<div class="mg">
+  <div class="hello">
+    <div class="button-container .start-button">
+      <a href="/workspace/char" class="start-button">이전 단계</a>
+    </div>
+    <div class="button-container .start-button">
+      <button class="start-button" id="next-button" onclick="nextPage()" disabled>다음 단계</button>
+<!--      <a href="/workspace/char_media" class="start-button">다음 단계</a>-->
+    </div>
+  </div>
+</div>
+<input type="hidden" id="userPath" th:value="${@sessionController.UUID}" />
+
+</body>
+<script src="/js/green-audio-player.js"></script>
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<script>
+  function nextPage() {
+    window.location.href = "/workspace/char_media";
+  }
+  function enableButton() {
+    const nextButton = document.getElementById("next-button");
+    nextButton.removeAttribute("disabled");
+  }
+
+  function disableButton() {
+    const nextButton = document.getElementById("next-button");
+    nextButton.setAttribute("disabled", "disabled");
+  }
+
+  disableButton();
+
+  var UUID = $("#userPath").val()
+
+  function enableRadioButton(enable){
+    var disabledValues = [ "chungcheong", "gangwon", "gyeongsang", "jeju", "jeolla", "kss" ];
+    for ( var i = 0 ; i < disabledValues.length ; i++ ){
+      var radioButton = document.querySelector('input[name="check_model_name"][id="' + disabledValues[i] + '"]');
+      radioButton.disabled = !enable;
+    }
+  }
+  function toggleContent(mode) {
+    if (mode === 'upload') {
+      document.getElementById('upload-content').style.display = 'block';
+      document.getElementById('create-content').style.display = 'none';
+      document.querySelector('.toggle-btn.on').classList.remove('on');
+      document.querySelector('.toggle-btn:nth-child(2)').classList.add('on');
+      enableRadioButton(false); // 라디오 버튼 비활성화
+
+      // 버튼 강제 선택
+      var tts_values = [ "chungcheong", "gangwon", "gyeongsang", "jeju", "jeolla", "kss" ];
+      var sel_model = $("[name=check_model_name]:checked").val()
+
+      if (tts_values.includes(sel_model)){
+        document.getElementById("anna-asti").checked = true;
+      }
+
+
+    } else if (mode === 'create') {
+      document.getElementById('upload-content').style.display = 'none';
+      document.getElementById('create-content').style.display = 'block';
+      document.querySelector('.toggle-btn.on').classList.remove('on');
+      document.querySelector('.toggle-btn:nth-child(1)').classList.add('on');
+      enableRadioButton(true); // 라디오 버튼 활성화
+    }
+  }
+
+  function uploadAudio() {
+    var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="/image/loding.gif" />').appendTo(document.body).hide();
+
+    var formData = new FormData();
+    formData.append("file", document.getElementById("audioFile").files[0]);
+    formData.append("modelName", $("[name=check_model_name]:checked").val());
+    formData.append("userPath", UUID);
+    formData.append("f0_key", document.getElementById("customRange2").value);
+
+
+    loading.show();
+    $.ajax({
+      type: "POST",
+      enctype: 'multipart/form-data',
+      url: '/audio_upload',
+      data: formData,
+      contentType: false,
+      processData: false
+    })
+            .done(function (result) {
+              console.log(result);
+              $(".audioOutputZone").replaceWith(result);
+              var player = new Plyr('#player')
+              enableButton();
+            })
+            .fail(function(jqXHR) {
+              console.log(jqXHR);
+              loading.hide();
+            })
+  };
+
+  const nomedia = new Plyr('#nomedia')
+  // 각 라디오 버튼과 오디오 요소를 가져옵니다.
+  var radioButtons = document.querySelectorAll('input[type="radio"]');
+  var audioElements = document.querySelectorAll('audio');
+  const ex_vocal = new Plyr("#ex_vocal");
+
+  // 라디오 버튼에 이벤트 리스너를 추가합니다.
+  radioButtons.forEach(function(radioButton) {
+    radioButton.addEventListener("change", function() {
+      // 선택한 라디오 버튼의 값을 가져옵니다.
+      var selectedValue = this.id;
+
+      // 모든 오디오 요소를 비활성화합니다.
+      audioElements.forEach(function(audioElement) {
+        if (audioElement.id !== "player") {
+          audioElement.pause();
+          audioElement.currentTime = 0;
+        }
+      });
+
+      var exVocalAudio = document.getElementById("ex_vocal");
+      exVocalAudio.src = "/audio/" + selectedValue + ".wav";
+    });
+  });
+
+
+  function createAudio() {
+    var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="/image/loding.gif" />').appendTo(document.body).hide();
+    var values = [ "chungcheong", "gangwon", "gyeongsang", "jeju", "jeolla" ];
+    var url_path;
+    var check_model_radio_button_id = $("[name=check_model_name]:checked").attr("id")
+    if ( check_model_radio_button_id == "kss"){
+      url_path = "/api/audio_vits"
+
+      var formData = {
+        userPath: $("#userPath").val(),
+        text:$("#prompt").val(),
+        model_name:$("[name=check_model_name]:checked").val(),
+        model_name_text:$("[name=check_model_name]:checked").next('label').text(),
+      }
+    }else if (values.includes(check_model_radio_button_id)){
+      url_path = "/api/audio"
+
+      var formData = {
+        userPath: $("#userPath").val(),
+        text:$("#prompt").val(),
+        model_name:$("[name=check_model_name]:checked").val(),
+        model_name_text:$("[name=check_model_name]:checked").next('label').text(),
+      }
+    } else {
+      url_path = "/api/audio_vc"
+
+      var formData = {
+        userPath: $("#userPath").val(),
+        text:$("#prompt").val(),
+        model_name:$("[name=check_model_name]:checked").val(),
+        model_name_text:$("[name=check_model_name]:checked").next('label').text(),
+      }
+    }
+
+    loading.show();
+    $.ajax({
+      type: "POST",
+      url: url_path,
+      data: formData
+    })
+            .done(function (result) {
+              console.log(result);
+              $(".audioOutputZone").replaceWith(result);
+              var player = new Plyr('#player')
+              loading.hide();
+              enableButton();
+            })
+            .fail(function(jqXHR) {
+              console.log(jqXHR);
+              loading.hide();
+            })
+  };
+
+
+</script>
+</html>

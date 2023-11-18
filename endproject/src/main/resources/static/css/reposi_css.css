@@ -1,0 +1,413 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(90deg, #000000, #24004d); /* 검정색에서 더 어두운 보라색으로 그라데이션 처리 */
+    color: white;
+}
+
+.tab-container {
+    display: flex;
+    align-items: center;
+    margin: 50px 50px 50px 40px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    background-color: #6062ED; /* 버튼의 배경색을 #6062ED로 설정 */
+
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background-color 0.3s;
+}
+
+.tab-button:first-child {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.tab-button:last-child {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.tab-divider {
+    width: 2px;
+    height: 40px;
+    background-color: #007bff;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    margin-left: 40px;
+}
+
+/* 호버 상태일 때 배경색 변경 */
+.tab-button:hover {
+    background-color: #494af2; /* 호버 상태일 때 배경색을 어두운 파란색 계열로 변경 */
+}
+
+/* 선택된 상태일 때 배경색 변경 */
+.tab-button.active {
+    background-color: #494af2; /* 선택된 상태일 때 배경색을 어두운 파란색 계열로 변경 */
+}
+
+/* 카드 스타일에 초기 위치 및 애니메이션 효과 추가 */
+.card {
+    width: 280px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    margin: 0px 20px 40px 10px;
+    transform: translateY(15%); /* 초기 위치를 아래로 설정 */
+    transition: transform 0.4s ease-in-out; /* 애니메이션 효과 및 시간 설정 */
+}
+
+
+.tab-container{
+    margin-left: 20%;
+}
+
+.hello{
+    display: flex;
+    flex-wrap: wrap!important;
+    max-width:70%;
+    margin-left: 20%;
+}
+
+
+.card img {
+    max-width: 90%;
+    display: block;
+    margin: 0 auto 20px;
+}
+.card_text{
+    margin-top: 20px;
+}
+.card p {
+    max-width: 100%;
+    margin: 0 auto;
+    font-size: 25px;
+    font-weight: bold;
+}
+/* 페이지 로드 시 카드가 위로 올라오는 애니메이션 효과 추가 */
+body.loaded .card {
+    transform: translateY(0); /* 로드 시 카드를 위로 이동하는 애니메이션 효과 적용 */
+}
+
+
+/* 모달 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: black;
+}
+
+.video-modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    /*width: 50%;*/
+    max-height: 80%;
+    position: relative;
+    border-radius: 10px;
+    display: flex;
+    min-width: 300px;
+    max-width: 900px;
+    min-height: 700px;
+}
+
+@media (max-width: 1381px) {
+    .char_info {
+        display: none;
+    }
+
+    .videoOutputZone video {
+        /*max-width: 97%;*/
+        justify-content: center;
+
+    }
+    .video-modal-content{
+        min-height: 300px;
+        width: 40%;
+    }
+}
+
+@media (min-width: 1382px){
+    .video-modal-content{
+        min-height: 300px;
+    }
+    .videoOutputZone video {
+        /*max-width: 70%;*/
+    }
+}
+
+.downloadVideoButton {
+    width: 100%;
+    margin-top: 20px;
+    background: linear-gradient(45deg, #007bff, #00ccff); /* 푸른색 계열 그라데이션 배경 */
+    /*border-image: linear-gradient(45deg, #007bff, #00ccff);*/
+    border-radius: 20px; /* 버튼을 둥글게 만듭니다. */
+    padding: 10px 10px; /* 가로로 1.5배 더 긴 버튼을 만들기 위해 패딩 조절 */
+    font-size: 16px; /* 버튼에 맞게 글자 크기 조절 */
+    cursor: pointer;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    text-decoration: none; /* 기본 하이퍼링크 스타일 제거 */
+    color: white;
+}
+
+.downloadAudioButton {
+    width: 100%;
+    background: linear-gradient(45deg, #007bff, #00ccff); /* 푸른색 계열 그라데이션 배경 */
+    /*border-image: linear-gradient(45deg, #007bff, #00ccff);*/
+    border-radius: 20px; /* 버튼을 둥글게 만듭니다. */
+    padding: 10px 10px; /* 가로로 1.5배 더 긴 버튼을 만들기 위해 패딩 조절 */
+    font-size: 16px; /* 버튼에 맞게 글자 크기 조절 */
+    cursor: pointer;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    text-decoration: none; /* 기본 하이퍼링크 스타일 제거 */
+    color: white;
+}
+
+#downloadVideoButton:hover{
+    background: linear-gradient(45deg, #00ccff,#007bff); /* 푸른색 계열 그라데이션 배경 */
+}
+
+.char_info{
+    margin-left: 5px;
+    width: 100%;
+    /*max-height: 550px;*/
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.char_info_header{
+    font-weight: bold;
+}
+.char_info_text{
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+/*.audio-modal-content {*/
+/*    border-radius: 10px;*/
+/*    background-color: #fff;*/
+/*    margin: 5% auto;*/
+/*    padding: 20px;*/
+/*    border: 1px solid #888;*/
+/*    width: 50%;*/
+/*    max-height: 80%;*/
+/*    position: relative;*/
+/*}*/
+
+/* 모달 닫기 버튼 스타일 */
+.close {
+    color: #888;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.close:hover {
+    cursor: pointer;
+}
+
+.modalShowButton {
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+
+.modalShowButton[disabled] {
+    position: relative; /* 부모 요소로 설정 */
+    /* 비활성화된 버튼의 스타일 */
+    cursor: not-allowed;
+    color: #666; /* 텍스트 색상 변경 (선택 사항) */
+}
+
+.modalShowButton[disabled] .card{
+    background: rgba(255,255,255,0.7);
+}
+
+.modalShowButton[disabled]::after {
+    content: "학습중인 음성입니다. 기달려주세요."; /* 알림 텍스트 */
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 2%;
+    /*left: 105%;*/
+    background-color: #ffffff;
+    padding: 5px 10px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    color: #000000 ;
+    white-space: nowrap;
+    font-size: 16px;
+    z-index: 1; /* 다른 내용 위에 표시 */
+}
+
+.modalShowButton[disabled]:hover::after {
+    display: block; /* 마우스를 올렸을 때 숨김 */
+}
+
+.output_zone{
+    display: none;
+}
+
+.audio-modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    max-height: 80%;
+    position: relative;
+    border-radius: 10px;
+    display: block;
+    min-width: 300px;
+    max-width: 500px;
+}
+
+.start-button2 {
+    background: linear-gradient(45deg, #007bff, #00ccff); /* 푸른색 계열 그라데이션 배경 */
+    /*border-image: linear-gradient(45deg, #007bff, #00ccff);*/
+    border-radius: 10px; /* 버튼을 둥글게 만듭니다. */
+    padding: 5px 15px; /* 가로로 1.5배 더 긴 버튼을 만들기 위해 패딩 조절 */
+    font-size: 16px; /* 버튼에 맞게 글자 크기 조절 */
+    cursor: pointer;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    text-decoration: none; /* 기본 하이퍼링크 스타일 제거 */
+    color: white;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.hello5{
+    display: flex;
+}
+
+.prompt_audio {
+    width: 100%;
+    height: 200px;
+    resize: none;
+    margin-bottom: 20px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+
+.prompt_video {
+    width: 100%;
+    height: 200px;
+    resize: none;
+    margin-bottom: 20px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+label{
+    max-width: 100%;
+}
+#loading {
+    height: 100%;
+    left: 0px;
+    position: fixed;
+    _position: absolute;
+    top: 0px;
+    width: 100%;
+    filter: alpha(opacity = 50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+}
+.loading {
+    background-color: white;
+    z-index: 999999;
+}
+#loading_img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 200px;
+    margin-top: -75px;
+    margin-left: -75px;
+    z-index: 999999;
+}
+
+
+
+
+.tab-container2 {
+    display: flex;
+    align-items: center;
+    margin-left: 35%;
+    margin-bottom: 10px;
+}
+
+.tab-button2 {
+    padding: 10px 20px;
+    background-color: #6062ED; /* 버튼의 배경색을 #6062ED로 설정 */
+
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background-color 0.3s;
+}
+
+.tab-button2:first-child {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.tab-button2:last-child {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.tab-divider2 {
+    width: 2px;
+    height: 40px;
+    background-color: #007bff;
+}
+
+.tab-content2 {
+    display: none;
+}
+
+.tab-content2.active {
+    display: block;
+    margin-left: 40px;
+}
+
+/* 호버 상태일 때 배경색 변경 */
+.tab-button2:hover {
+    background-color: #494af2; /* 호버 상태일 때 배경색을 어두운 파란색 계열로 변경 */
+}
+
+/* 선택된 상태일 때 배경색 변경 */
+.tab-button2.active {
+    background-color: #494af2; /* 선택된 상태일 때 배경색을 어두운 파란색 계열로 변경 */
+}
+
+
+.new_video_download_zone{
+    margin-top: 60%;
+}

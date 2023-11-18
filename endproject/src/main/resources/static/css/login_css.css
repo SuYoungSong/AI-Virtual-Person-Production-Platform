@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(90deg, #000000, #24004d); /* 검정색에서 더 어두운 보라색으로 그라데이션 처리 */
+    color: black;
+}
+
+.fw-normal{
+    color:white;
+}
+
+.errorMessage{
+    color:red;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    margin: auto;
+    margin-top: 100px;
+}
+
+.form-signin .checkbox {
+    font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    /*border-top-left-radius: 0;*/
+    /*border-top-right-radius: 0;*/
+}
+
+.login_box{
+    margin-top: 10px;
+    border-radius: 5px;
+}

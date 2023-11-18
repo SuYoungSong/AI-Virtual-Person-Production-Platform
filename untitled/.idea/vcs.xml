@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/MVSEP_MDX23_Colab_v2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pose_to_image/CounterfeitV30_v30" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pose_to_image/beautifulRealistic_v7" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pose_to_image/majicmixRealistic_v7" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pose_to_image/realisticVisionV51_v51VAE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vits" vcs="Git" />
+  </component>
+</project>
